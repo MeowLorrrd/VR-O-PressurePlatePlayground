@@ -48,16 +48,18 @@ public sealed class DualPlateGoal : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        PlayerMover playerMover = other.GetComponent<PlayerMover>();
-        playerMover.enabled = false;
-        
-        gate.gameObject.SetActive(false);
-        
-        fireworksRoot.SetActive(true);
-        foreach (VisualEffect effect in fireworksRoot.GetComponentsInChildren<VisualEffect>())
+        if (other.TryGetComponent(out PlayerMover playerMover))
         {
-            effect.Reinit();
-            effect.Play();
+            playerMover.enabled = false;
+
+            gate.gameObject.SetActive(false);
+
+            fireworksRoot.SetActive(true);
+            foreach (VisualEffect effect in fireworksRoot.GetComponentsInChildren<VisualEffect>())
+            {
+                effect.Reinit();
+                effect.Play();
+            }
         }
     }
 }

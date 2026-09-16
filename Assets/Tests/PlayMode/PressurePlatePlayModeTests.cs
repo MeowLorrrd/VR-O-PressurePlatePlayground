@@ -15,13 +15,13 @@ public sealed class PressurePlatePlayModeTests
         SceneManager.LoadScene("PressurePlatePlayground");
         yield return null;
 
-        PlayerMover player = Object.FindFirstObjectByType<PlayerMover>();
+        PlayerMover player = Object.FindAnyObjectByType<PlayerMover>();
         PressurePlate blue = GameObject.Find("Blue PressurePlate").GetComponent<PressurePlate>();
         PressurePlate orange = GameObject.Find("Orange PressurePlate").GetComponent<PressurePlate>();
         Rigidbody heavy = GameObject.Find("Heavy Push Cube").GetComponent<Rigidbody>();
         Rigidbody lightCube = GameObject.Find("Light Push Cube").GetComponent<Rigidbody>();
         GameObject gate = GameObject.Find("Exit Gate");
-        Light[] lights = Object.FindObjectsByType<Light>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+        Light[] lights = Object.FindObjectsByType<Light>(FindObjectsInactive.Include);
         Light blueLight = System.Array.Find(lights, light => light.name == "Blue Lock Light");
         Light orangeLight = System.Array.Find(lights, light => light.name == "Orange Lock Light");
         Transform blueLock = GameObject.Find("Blue Door Lock").transform;

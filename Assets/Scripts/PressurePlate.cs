@@ -15,6 +15,7 @@ public class PressurePlate : MonoBehaviour
     private Vector3 restPosition;
    
     private int load;
+    private float amassedMass = 0.0f;
 
     private void Awake()
     {
@@ -31,25 +32,26 @@ public class PressurePlate : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (Counts(other))
+        if (Counts(other, true))
         {
-            load++;
-            if (load == 1) onPressed.Invoke();
+            ++load;
+            onPressed.Invoke();
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (Counts(other))
+        if (!Counts(other, false))
         {
-            load--;
-            if (load == 0) onReleased.Invoke();
+            --load;
+            onReleased.Invoke();
         }
     }
 
-    private bool Counts(Collider other)
+    private bool Counts(Collider other, bool enteredPlate)
     {
-        Rigidbody otherRigidbody = other.GetComponent<Rigidbody>();
-        return otherRigidbody.mass >= requiredMass;    
+        float mul = enteredPlate ? 1.0f : -1.0f;
+        amassedMass += other.GetComponent<Rigidbody>().mass * mul;
+        return amassedMass >= requiredMass;    
     }
 }

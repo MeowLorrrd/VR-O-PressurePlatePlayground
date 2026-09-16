@@ -19,20 +19,20 @@ public sealed class PlayerMover : MonoBehaviour
     private void FixedUpdate()
     {
         Vector2 input = ReadInput();
-        Vector3 horizontalVelocity = new Vector3(input.x, 0, input.y);
+        Vector3 horizontalVelocity = new(input.x, 0, input.y);
         body.linearVelocity = new Vector3(horizontalVelocity.x, 0, horizontalVelocity.z) * speed;
     }
 
     private static Vector2 ReadInput()
     {
         Keyboard keyboard = Keyboard.current;
-        if (keyboard == null) return Vector2.zero;
-
         Vector2 input = Vector2.zero;
-        if (keyboard.wKey.isPressed || keyboard.upArrowKey.isPressed) input.y += 1f;
-        if (keyboard.sKey.isPressed || keyboard.downArrowKey.isPressed) input.y -= 1f;
-        if (keyboard.dKey.isPressed || keyboard.rightArrowKey.isPressed) input.x += 1f;
-        if (keyboard.aKey.isPressed || keyboard.leftArrowKey.isPressed) input.x -= 1f;
+        if (null == keyboard) { return input; }
+    
+        if (keyboard[Key.W].IsPressed() || keyboard[Key.UpArrow].IsPressed()) { input.y += 1.0f; }
+        if (keyboard[Key.S].IsPressed() || keyboard[Key.DownArrow].IsPressed()) { input.y -= 1.0f; }
+        if (keyboard[Key.D].IsPressed() || keyboard[Key.RightArrow].IsPressed()) { input.x += 1.0f; }
+        if (keyboard[Key.A].IsPressed() || keyboard[Key.LeftArrow].IsPressed()) { input.x -= 1.0f; }
         return input;
     }
 }
